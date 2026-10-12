@@ -33,7 +33,7 @@ The firmware is located in [`firmware/air-monitor/`](./firmware/air-monitor/):
 - **Sensors**:
   - **Sharp GP2Y1010AU0F**: Optical dust sensor measuring airborne particulate density ($\mu g/m^3$).
   - **DHT22 (AM2302)**: Digital sensor measuring ambient temperature (°C) and relative humidity (%).
-- **Actuator Control**: 5V Relay module driving high-voltage air purifier / ventilation fan.
+- **Actuator Control**: 5V Relay module (**JQC3F-05VDC-C**) driving high-voltage air purifier / ventilation fan.
 - **Visual Status LEDs**: Direct LED triage (Green: Good, Yellow: Moderate, Red: Unhealthy).
 - **Web & REST Server**: Serves live JSON data at `/status`, processes purifier toggles at `/toggle/fan`, and serves a browser status page on `/`.
 - **mDNS Discovery**: Resolves as `http://airmonitor.local/` on the local network.
@@ -63,7 +63,7 @@ For detailed build, setup, and testing instructions, please refer to the [**Andr
    ├── Sharp Optical Dust Sensor (GP2Y1010AU0F)
    ├── Temperature & Humidity Sensor (DHT22)
    ├── 3x Air Quality Status LEDs (Green, Yellow, Red)
-   └── 5V Relay Module (Controls Fan / Air Purifier)
+   └── 5V Relay Module (JQC3F-05VDC-C, Controls Fan / Air Purifier)
             │
             ▼ Wi-Fi (HTTP REST over LAN)
             │

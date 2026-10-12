@@ -11,7 +11,7 @@ This directory contains the Arduino C++ firmware for the **NodeMCU ESP8266** mic
 | **Microcontroller** | NodeMCU ESP8266 (AMICA CP2102) | Wi-Fi REST server, sensor acquisition, relay control |
 | **Dust Sensor** | Sharp GP2Y1010AU0F | Measures ambient particulate matter (PM2.5 / dust density) |
 | **Temp & Humidity** | DHT22 (AM2302) | Measures ambient temperature (°C) and relative humidity (%) |
-| **Actuator Relay** | 5V 1-Channel Relay Module | Controls high-voltage fan / air purifier power |
+| **Actuator Relay** | 5V 1-Channel Relay Module (JQC3F-05VDC-C) | Controls high-voltage fan / air purifier power |
 | **Status LEDs** | 5mm LEDs (Green, Yellow, Red) | Visual air quality indicator with 150Ω current-limiting resistors |
 
 ---
@@ -29,7 +29,7 @@ This directory contains the Arduino C++ firmware for the **NodeMCU ESP8266** mic
 | **DHT22 VCC**        | `3V3`         | Sensor power supply |
 | **DHT22 GND**        | `GND`         | Ground |
 | **DHT22 DATA**       | `D4` (GPIO 2) | One-wire digital data pin |
-| **Fan Relay SIG**    | `D1` (GPIO 5) | Active-LOW relay trigger signal |
+| **Fan Relay SIG**    | `D1` (GPIO 5) | Active-LOW relay trigger signal (JQC3F-05VDC-C) |
 | **Fan Relay VCC**    | `Vin` (5V) / `3V3` | Relay coil power (if 5V supported) |
 | **Fan Relay GND**    | `GND`         | Ground |
 | **Status LED Green** | `D6` (GPIO 12)| Connect through 150Ω resistor to LED anode -> GND |
@@ -38,7 +38,7 @@ This directory contains the Arduino C++ firmware for the **NodeMCU ESP8266** mic
 
 ---
 
-### 2. Fan Relay Logic & High-Voltage Wiring
+### 2. Fan Relay Logic & High-Voltage Wiring (JQC3F-05VDC-C)
 
 - **Relay Logic**:
   - **Fan ON**: `D1` is set to `INPUT` (high impedance), releasing the pin so the relay stays deactivated. `COM` and `NC` remain connected.

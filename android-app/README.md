@@ -40,7 +40,7 @@ The Android application operates on a **Local Area Network (LAN)** client-server
    ├── Optical Dust Sensor (GP2Y1010AU0F)
    ├── Temperature & Humidity Sensor (DHT22)
    ├── 3x Status LEDs (Green, Yellow, Red)
-   └── 5V Relay Module (Controls Fan / Air Purifier)
+   └── 5V Relay Module (JQC3F-05VDC-C, Controls Fan / Air Purifier)
             │
             ▼ Wi-Fi (HTTP REST over LAN)
             │
