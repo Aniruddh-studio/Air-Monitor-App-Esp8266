@@ -1,10 +1,10 @@
-# AQI Sensor — Android Air Quality Monitor Companion
+﻿# AQI Sensor — Android Air Quality Monitor Companion
 
 An elegant, modern Android companion application built with **Jetpack Compose** and **Material 3** for monitoring indoor air quality in real time. The app connects directly over local Wi-Fi to an **ESP8266** microcontroller equipped with dust, temperature, and humidity sensors, providing live metric gauges, historical trend charts, and hardware actuator control (air purifier / exhaust fan toggle).
 
 ---
 
-## 📸 Key Features
+## 🌟 Key Features
 
 - **Dynamic AQI Gauge**: Live circular air quality index dial calibrated against the **US EPA PM2.5 AQI standard** (0–500 scale with breakpoints for Good, Moderate, Unhealthy for Sensitive Groups, Unhealthy, Very Unhealthy, and Hazardous).
 - **Comprehensive Environmental Telemetry**: Real-time readouts for:
@@ -19,7 +19,7 @@ An elegant, modern Android companion application built with **Jetpack Compose** 
 
 ---
 
-## 🛠 Tech Stack & Architecture
+## 🛠️ Tech Stack & Architecture
 
 - **UI Framework**: Modern declarative UI with **Jetpack Compose** and **Material 3**.
 - **Architecture**: MVVM (Model-View-ViewModel) with unidirectional data flow (UDF).
@@ -33,22 +33,23 @@ An elegant, modern Android companion application built with **Jetpack Compose** 
 
 ## 🔌 Hardware Architecture & Connection
 
-The Android application operates on a **Local Area Network (LAN)** client-server model:
+The Android application operates on a **Local Area Network (LAN)** client-server model communicating with the ESP8266 firmware located in [`../firmware/air-monitor/`](../firmware/air-monitor/):
 
 ```
 [ ESP8266 Microcontroller ]
-   ├── Optical Dust Sensor (e.g., GP2Y1010AU0F / PMS5003)
-   ├── DHT11 / DHT22 (Temp & Humidity Sensor)
-   └── 5V Relay Module (Controls Air Purifier / Fan)
-            ▲
-            │ Wi-Fi (HTTP REST over LAN)
-            ▼
+   ├── Optical Dust Sensor (GP2Y1010AU0F)
+   ├── Temperature & Humidity Sensor (DHT22)
+   ├── 3x Status LEDs (Green, Yellow, Red)
+   └── 5V Relay Module (Controls Fan / Air Purifier)
+            │
+            ▼ Wi-Fi (HTTP REST over LAN)
+            │
 [ Android Device (AQI Sensor App) ]
 ```
 
 ### ESP8266 REST API Specification
 
-Your ESP8266 firmware must expose the following HTTP endpoints on port `80` (or configured port):
+The firmware (see [Firmware Documentation](../firmware/README.md)) exposes the following HTTP endpoints:
 
 #### 1. Device Status
 - **Method**: `GET`
@@ -88,7 +89,7 @@ Your ESP8266 firmware must expose the following HTTP endpoints on port `80` (or 
 ### 1. Clone the Repository
 ```bash
 git clone https://github.com/Aniruddh-studio/Air-Monitor-App-Esp8266.git
-cd Air-Monitor-App-Esp8266
+cd Air-Monitor-App-Esp8266/android-app
 ```
 
 ### 2. Configure Local Properties & Secrets
@@ -103,11 +104,11 @@ Local configuration and machine-specific paths are excluded from version control
    ```
 3. *(Optional)* If you want a default device IP injected into debug builds:
    ```properties
-   DEFAULT_DEVICE_IP=192.168.1.100
+   DEFAULT_DEVICE_IP=192.168.1.20
    ```
 
 ### 3. Build & Run
-Open the project in Android Studio and click **Run 'app'** (`Shift + F10`) or build via Gradle:
+Open the `android-app` directory in Android Studio and click **Run 'app'** (`Shift + F10`) or build via Gradle:
 ```bash
 ./gradlew assembleDebug
 ```
@@ -135,7 +136,7 @@ A standalone mock ESP8266 server is included in the project root:
 
 ---
 
-## 🛡 Security & Privacy
+## 🔒 Security & Privacy
 
 - **No Secrets in Source Control**: All machine paths, keystore keys, and local secrets remain in `local.properties` (strictly ignored by `.gitignore`).
 - **Dynamic LAN Targeting**: No IP addresses or hardware MAC identifiers are hardcoded; connections are established dynamically through user-controlled settings stored in private app DataStore.
@@ -145,4 +146,4 @@ A standalone mock ESP8266 server is included in the project root:
 
 ## 📄 License
 
-This project is licensed under the [MIT License](LICENSE) (or choose your preferred license).
+This project is licensed under the [MIT License](../LICENSE).
