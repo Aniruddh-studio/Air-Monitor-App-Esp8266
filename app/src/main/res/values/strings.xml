@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">AQI Sensor</string>
+    <string name="label_dust">Dust Sensor</string>
+    <string name="label_humidity">Humidity Sensor</string>
+    <string name="label_temperature">Temperature</string>
+    <string name="label_air_quality">Air Quality</string>
+    <string name="label_all_on">All On</string>
+    <string name="label_all_off">All Off</string>
+    <string name="label_device_ip">Device IP Address</string>
+    <string name="desc_dust">Monitors particulate matter (PM2.5)</string>
+    <string name="desc_humidity">Monitors relative humidity</string>
+    <string name="error_cant_reach">Can\'t reach device</string>
+    <string name="error_hint">This usually means your phone is on a different Wi-Fi network, or the device\'s IP address has changed.</string>
+    <string name="action_retry">Retry</string>
+    <string name="action_save">Save</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="hint_ip_address">e.g. 192.168.1.45</string>
+    <string name="title_settings">Device Settings</string>
+    <string name="setup_title">Welcome to AQI Sensor</string>
+    <string name="setup_subtitle">Enter the IP address of your ESP8266 air quality monitor to get started.</string>
+    <string name="unit_celsius">°C</string>
+    <string name="unit_humidity">%</string>
+    <string name="unit_dust">μg/m³</string>
+</resources>

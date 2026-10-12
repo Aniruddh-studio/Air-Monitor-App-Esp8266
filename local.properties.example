@@ -1,0 +1,19 @@
+## This is an example local.properties template.
+## Copy this file to 'local.properties' and fill in your local paths and secrets.
+## Do NOT commit your actual local.properties to version control.
+
+# Location of your local Android SDK (set by Android Studio automatically)
+# Windows example: sdk.dir=C\:\\Users\\<YourUsername>\\AppData\\Local\\Android\\Sdk
+# macOS example:   sdk.dir=/Users/<YourUsername>/Library/Android/sdk
+# Linux example:   sdk.dir=/home/<YourUsername>/Android/Sdk
+sdk.dir=PATH_TO_YOUR_ANDROID_SDK
+
+# Optional: Default hardware device IP for development / testing
+# If set, this value is exposed to BuildConfig.DEFAULT_DEVICE_IP
+# DEFAULT_DEVICE_IP=192.168.1.100
+
+# Optional: Release signing configuration (if configuring signed release builds)
+# RELEASE_KEY_ALIAS=your_key_alias
+# RELEASE_KEY_PASSWORD=your_key_password
+# RELEASE_STORE_FILE=your_keystore_path.jks
+# RELEASE_STORE_PASSWORD=your_store_password

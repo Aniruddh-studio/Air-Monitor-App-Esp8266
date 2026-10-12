@@ -1,0 +1,66 @@
+# Built application files
+*.apk
+*.aab
+*.ap_
+
+# Files for the ART/Dalvik VM
+*.dex
+
+# Java class files
+*.class
+
+# Generated build files & caches
+bin/
+gen/
+out/
+build/
+app/build/
+*/build/
+
+# Gradle files
+.gradle/
+buildOutputCleanup/
+
+# Local configuration file (contains personal SDK paths & secrets)
+local.properties
+**/local.properties
+
+# Signing credentials & Keystores
+*.jks
+*.keystore
+*.p12
+*.key
+
+# Google Services / Firebase credentials
+google-services.json
+
+# Android Studio / IntelliJ IDEA
+.idea/
+*.iml
+.idea_modules/
+
+# Kotlin cache
+.kotlin/
+
+# Python cache & virtualenvs (mock server)
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# OS-specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Android Studio profiling / capture files
+captures/
+.externalNativeBuild/
+.cxx/

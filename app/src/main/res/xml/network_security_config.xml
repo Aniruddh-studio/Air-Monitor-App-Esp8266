@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Network Security Config for AQI Sensor.
+
+    The device IP is entered by the user at runtime (stored in DataStore),
+    so it cannot be hardcoded into a <domain-config> at build time.
+
+    Android's <domain> tag only accepts literal hostnames or literal IP
+    addresses — it does NOT support CIDR ranges, wildcards, or reverse-DNS
+    patterns. Any such entry would silently match nothing.
+
+    Since the app's sole network target is a single local ESP8266 device
+    on the private LAN, enabling cleartext app-wide is the correct and
+    standard approach for local-device controller apps.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>
