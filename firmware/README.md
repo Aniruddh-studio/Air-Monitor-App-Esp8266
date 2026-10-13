@@ -84,19 +84,26 @@ if (dustDensity < 0) dustDensity = 0;
 
 ### Setup & Configuration
 
-1. Open `firmware/air-monitor/air-monitor.ino` in Arduino IDE.
-2. Update Wi-Fi credentials in lines 93–94:
-   ```cpp
-   const char* WIFI_SSID = "YOUR_WIFI_NAME";
-   const char* WIFI_PASSWORD = "YOUR_WIFI_PASSWORD";
+1. In `firmware/air-monitor/`, copy `secrets.example.h` to `secrets.h`:
+   ```bash
+   cp secrets.example.h secrets.h
    ```
-3. *(Optional)* Configure static IP settings in `setup()` if desired:
+2. Open `secrets.h` and configure your Wi-Fi credentials and static IP parameters:
    ```cpp
-   IPAddress local_IP(192, 168, 1, 20);
-   IPAddress gateway(192, 168, 1, 1);
-   IPAddress subnet(255, 255, 255, 0);
-   IPAddress dns(192, 168, 1, 1);
+   #pragma once
+
+   // Copy this file to "secrets.h" and fill in your own values.
+
+   #define WIFI_SSID     "YOUR_WIFI_NAME"
+   #define WIFI_PASSWORD "YOUR_WIFI_PASSWORD"
+
+   #define STATIC_IP_ADDR  192, 168, 1, 20
+   #define GATEWAY_ADDR    192, 168, 1, 1
+   #define SUBNET_ADDR     255, 255, 255, 0
+   #define DNS_ADDR        192, 168, 1, 1
    ```
+   *(Note: `secrets.h` is excluded via `.gitignore` to prevent leaking private credentials).*
+3. Open `firmware/air-monitor/air-monitor.ino` in Arduino IDE.
 4. Under **Tools**, select:
    - **Board**: `NodeMCU 1.0 (ESP-12E Module)`
    - **Upload Speed**: `115200`

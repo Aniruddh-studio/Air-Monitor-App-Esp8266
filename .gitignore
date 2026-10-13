@@ -64,3 +64,9 @@ Desktop.ini
 captures/
 .externalNativeBuild/
 .cxx/
+
+# ESP8266 Wi-Fi & Network Credentials
+secrets.h
+Secrets.h
+**/secrets.h
+**/Secrets.h

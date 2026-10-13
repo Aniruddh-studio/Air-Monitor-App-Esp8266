@@ -17,7 +17,8 @@ Air-Monitor-App-Esp8266/
 │   └── README.md                # Detailed Android app documentation
 ├── firmware/                    # ESP8266 NodeMCU Firmware
 │   ├── air-monitor/             # Arduino sketch directory
-│   │   └── air-monitor.ino      # Main Arduino C++ firmware sketch
+│   │   ├── air-monitor.ino      # Main Arduino C++ firmware sketch
+│   │   └── secrets.example.h    # Template for Wi-Fi and static IP configuration
 │   └── README.md                # Hardware wiring, pinout & flashing guide
 ├── LICENSE                      # MIT License
 └── README.md                    # Repository overview & system architecture
@@ -95,7 +96,7 @@ For detailed build, setup, and testing instructions, please refer to the [**Andr
 
 ### 1. Flash the Firmware
 1. Open [`firmware/air-monitor/air-monitor.ino`](./firmware/air-monitor/air-monitor.ino) in Arduino IDE.
-2. Update `WIFI_SSID` and `WIFI_PASSWORD` with your local Wi-Fi credentials.
+2. Copy `firmware/air-monitor/secrets.example.h` to `secrets.h` and configure Wi-Fi credentials and static IP settings.
 3. Install required libraries (`ArduinoJson` v7, `DHT sensor library`).
 4. Select board **NodeMCU 1.0 (ESP-12E Module)** and upload.
 5. Check Serial Monitor (`115200 baud`) to retrieve the assigned IP address.

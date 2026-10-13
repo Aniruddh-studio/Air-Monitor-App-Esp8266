@@ -77,6 +77,7 @@
 #include <ESP8266mDNS.h>
 #include <ArduinoJson.h>
 #include <DHT.h>
+#include "secrets.h"
 
 
 // ==========================================================
@@ -84,15 +85,6 @@
 // ==========================================================
 
 const char* MDNS_HOSTNAME = "airmonitor";
-
-
-// ==========================================================
-// WI-FI CREDENTIALS
-// ==========================================================
-
-const char* WIFI_SSID = "YOUR_WIFI_NAME";
-const char* WIFI_PASSWORD = "YOUR_WIFI_PASSWORD";
-
 
 // ==========================================================
 // PIN DEFINITIONS
@@ -320,54 +312,93 @@ void handleToggleFan() {
 
 void handleRoot() {
 
-  String page =
-    "<html><body style='font-family:sans-serif;"
-    "text-align:center;padding-top:30px'>";
+  String page = R"rawliteral(
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Air Monitor</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center;
+           padding: 24px 12px; background: #f4f6f8; color: #222; }
+    .card { max-width: 420px; margin: auto; padding: 22px;
+            background: white; border-radius: 14px; box-shadow: 0 2px 10px #0001; }
+    button { padding: 12px 20px; margin: 8px; border: 0; border-radius: 8px;
+             color: white; font-size: 16px; cursor: pointer; }
+    #onBtn { background: #198754; }
+    #offBtn { background: #dc3545; }
+    button:disabled { opacity: .55; cursor: wait; }
+    .reading { margin: 12px; }
+    #message { min-height: 20px; color: #555; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Air Monitor</h2>
+    <p class="reading">Fan: <b id="fanState">Loading...</b></p>
+    <button id="onBtn" onclick="setFan(true)">Turn Fan ON</button>
+    <button id="offBtn" onclick="setFan(false)">Turn Fan OFF</button>
+    <p id="message"></p>
+    <hr>
+    <p class="reading">Temperature: <b id="temp">--</b> &deg;C</p>
+    <p class="reading">Humidity: <b id="humidity">--</b> %</p>
+    <p class="reading">Dust Density: <b id="dust">--</b> &micro;g/m&sup3;</p>
+    <p class="reading">Wi-Fi: <b id="wifi">--</b></p>
+    <p style="font-size:13px;color:#888">Live status: <a href="/status">/status</a></p>
+  </div>
+<script>
+  async function refreshStatus() {
+    try {
+      const response = await fetch('/status', { cache: 'no-store' });
+      if (!response.ok) throw new Error('Status request failed');
+      const data = await response.json();
+      document.getElementById('fanState').textContent = data.fan ? 'ON' : 'OFF';
+      document.getElementById('temp').textContent = Number(data.tempC).toFixed(1);
+      document.getElementById('humidity').textContent = Number(data.humidityPct).toFixed(1);
+      document.getElementById('dust').textContent = Number(data.dustUgM3).toFixed(2);
+      document.getElementById('wifi').textContent = data.wifi ? 'Connected' : 'Disconnected';
+    } catch (error) {
+      document.getElementById('message').textContent =
+        'Unable to read status. Check the ESP8266 Wi-Fi connection.';
+    }
+  }
 
-  page += "<h2>Air Monitor</h2>";
+  async function setFan(on) {
+    const onBtn = document.getElementById('onBtn');
+    const offBtn = document.getElementById('offBtn');
+    const message = document.getElementById('message');
+    onBtn.disabled = true;
+    offBtn.disabled = true;
+    message.textContent = 'Sending command...';
 
-  page +=
-    "<p>Fan: <b>" +
-    String(fanOn ? "ON" : "OFF") +
-    "</b></p>";
+    try {
+      const response = await fetch('/toggle/fan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ on: on })
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Fan command failed');
+      document.getElementById('fanState').textContent = data.fan ? 'ON' : 'OFF';
+      message.textContent = 'Fan command sent. Reported state: ' + (data.fan ? 'ON' : 'OFF');
+      await refreshStatus();
+    } catch (error) {
+      message.textContent = 'Could not control fan: ' + error.message;
+    } finally {
+      onBtn.disabled = false;
+      offBtn.disabled = false;
+    }
+  }
 
-  page +=
-    "<p>Temp: " +
-    String(lastTempC, 1) +
-    " C</p>";
+  refreshStatus();
+  setInterval(refreshStatus, 2000);
+</script>
+</body>
+</html>
+)rawliteral";
 
-  page +=
-    "<p>Humidity: " +
-    String(lastHumid, 1) +
-    " %</p>";
-
-  page +=
-    "<p>Dust Density: " +
-    String(lastDust, 2) +
-    " ug/m3</p>";
-
-  page +=
-    "<p>Wi-Fi: <b>" +
-    String(
-      WiFi.status() == WL_CONNECTED
-        ? "Connected"
-        : "Disconnected"
-    ) +
-    "</b></p>";
-
-  page +=
-    "<p style='color:#888;font-size:13px'>"
-    "Fan control endpoint: /toggle/fan"
-    "</p>";
-
-  page +=
-    "<p style='color:#888;font-size:13px'>"
-    "Live status: <a href='/status'>/status</a>"
-    "</p>";
-
-  page += "</body></html>";
-
-  server.send(200, "text/html", page);
+  server.send(200, "text/html; charset=utf-8", page);
 }
 
 
@@ -474,10 +505,10 @@ void setup() {
   // STATIC IP
   // ========================================================
 
-  IPAddress local_IP(192, 168, 1, 20);
-  IPAddress gateway(192, 168, 1, 1);
-  IPAddress subnet(255, 255, 255, 0);
-  IPAddress dns(192, 168, 1, 1);
+  IPAddress local_IP(STATIC_IP_ADDR);
+  IPAddress gateway(GATEWAY_ADDR);
+  IPAddress subnet(SUBNET_ADDR);
+  IPAddress dns(DNS_ADDR);
 
   if (!WiFi.config(local_IP, gateway, subnet, dns)) {
 
@@ -485,7 +516,7 @@ void setup() {
 
   } else {
 
-    Serial.println("Static IP configured: 192.168.1.20");
+    Serial.println("Static IP configured");
   }
 
 
